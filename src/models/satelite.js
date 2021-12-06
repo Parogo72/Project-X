@@ -16,7 +16,7 @@ function Satelite({position, size, orbit}) {
     })
     return (
       <>
-        <mesh castShadow receiveShadow position={position} ref={mesh}>
+        <mesh castShadow={true} receiveShadow position={position} ref={mesh}>
           <sphereGeometry args={[size, 30, 30]} />
           <meshStandardMaterial color="white"/>
         </mesh>
