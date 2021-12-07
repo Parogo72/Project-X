@@ -2,8 +2,8 @@ import { BufferGeometry, Vector3 } from 'three';
 
 function Orbit({ xRadius = 1, zRadius = 1, position }) {
     const points = [];
-    for (let index = 0; index < 128; index++) {
-      const angle = (index / 128) * 2 * Math.PI;
+    for (let index = 0; index < 1000; index++) {
+      const angle = (index / 1000) * 2 * Math.PI;
       const x = xRadius * Math.cos(angle);
       const z = zRadius * Math.sin(angle);
       points.push(new Vector3(x, 0, z));

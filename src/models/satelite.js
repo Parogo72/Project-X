@@ -1,6 +1,6 @@
 import { useRef } from 'react'; 
 import { useFrame } from '@react-three/fiber';
-import Orbit from './orbit.js'
+import Orbit from './orbit.js';
 function Satelite({position, size, orbit}) {
     const mesh = useRef(null);
     let i=0;

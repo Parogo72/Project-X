@@ -9,7 +9,7 @@ function MyStars() {
     return (
       <>
         <mesh ref={mesh}>
-          <Stars />
+          <Stars radius={400} factor={10}/>
         </mesh>
       </>
     );
