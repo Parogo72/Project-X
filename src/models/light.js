@@ -1,14 +1,4 @@
-import { useRef } from 'react';  
-import { useFrame } from '@react-three/fiber';
-
-function Light({ brightness, color }) {
-  const mesh = useRef(null);
-
-  useFrame(({camera}) => {
-    mesh.current.position.x = camera.position.x;
-    mesh.current.position.y = camera.position.y;
-    mesh.current.position.z = camera.position.z;
-  })
+function Light({ brightness, color, position }) {
     return (
       <spotLight
         color={color}
@@ -16,8 +6,9 @@ function Light({ brightness, color }) {
         lookAt={[0, 0, 0]}
         penumbra={1}
         castShadow={true}
+        shadowCamera
         angle={0.3}
-        ref={mesh}
+        position={position}
       />
     );
   }
