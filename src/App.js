@@ -15,15 +15,13 @@ function App() {
   return (
   <Suspense fallback={<Loader />}>
     <Canvas shadows shadowMap camera={camera}>
-      <OrbitControls enablePan={false} enableZoom={false} position0={[5, 0, 0]}/>
+      <OrbitControls enablePan={false} enableZoom={true} position0={[5, 0, 0]}/>
       <MyStars />
       <ambientLight intensity= {0.5} />
       <Sun position={[500, 0, 0]} size={200} base={"/sun.jpeg"}/>
       <Light brightness={2} color={"white"} position={[10, 0, 0]}/>
       <Planet position={[0, 0, 0]} size={1} base={"/earth.jpeg"} orbit={500}/>
       <Satelite position={[1, 0, 0]} size={0.1} orbit={1.5}/>
-      <Orbit xRadius={orbit} zRadius={orbit} position={500}/>
-      <Orbit xRadius={orbit} zRadius={orbit} position={0}/>
     </Canvas>
   </Suspense>
   )

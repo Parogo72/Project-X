@@ -16,6 +16,7 @@ function Planet({ position, base, size, orbit }) {
           <sphereGeometry args={[size, 30, 30]} />
           <meshStandardMaterial map={texture}/>
         </mesh>
+        <Orbit xRadius={orbit} zRadius={orbit} position={500}/>
       </>
     );
 }
