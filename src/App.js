@@ -22,6 +22,8 @@ function App() {
       <Light brightness={2} color={"white"} position={[10, 0, 0]}/>
       <Planet position={[0, 0, 0]} size={1} base={"/earth.jpeg"} orbit={500}/>
       <Satelite position={[1, 0, 0]} size={0.1} orbit={1.5}/>
+      <Orbit xRadius={orbit} zRadius={orbit} position={500}/>
+      <Orbit xRadius={orbit} zRadius={orbit} position={0}/>
     </Canvas>
   </Suspense>
   )
