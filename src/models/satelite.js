@@ -20,7 +20,7 @@ function Satelite({position, size, orbit}) {
           <sphereGeometry args={[size, 30, 30]} />
           <meshStandardMaterial color="white"/>
         </mesh>
-        <Orbit xRadius={orbit} zRadius={orbit} position={[0,0,0]} />
+        <Orbit xRadius={orbit} zRadius={orbit} position={0} />
       </>
       </>
     );
