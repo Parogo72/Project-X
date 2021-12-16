@@ -4,7 +4,7 @@ import { RepeatWrapping, TextureLoader } from 'three';
 
 function Sun({ position, base, size }) {
     const texture = useLoader(TextureLoader, base);
-    //texture.wrapS = RepeatWrapping;
+    texture.wrapS = RepeatWrapping;
     const mesh = useRef(null);
     useFrame(() => {
       mesh.current.rotation.y += 0.0005;
