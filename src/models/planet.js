@@ -4,8 +4,8 @@ import { RepeatWrapping, TextureLoader } from 'three';
 import Orbit from './orbit.js';
 
 function Planet({ position, base, size, orbit }) {
-    //const texture = useLoader(TextureLoader, base);
-    //texture.wrapS = RepeatWrapping;
+    const texture = useLoader(TextureLoader, base);
+    texture.wrapS = RepeatWrapping;
     const mesh = useRef(null);
     useFrame(() => {
       mesh.current.rotation.y += 0.001;
@@ -14,7 +14,7 @@ function Planet({ position, base, size, orbit }) {
       <>
         <mesh castShadow receiveShadow={true} position={position} ref={mesh}>
           <sphereGeometry args={[size, 30, 30]} />
-          <meshStandardMaterial/>
+          <meshStandardMaterial map={texture} />
         </mesh>
         <Orbit xRadius={orbit} zRadius={orbit} position={500} />
       </>
