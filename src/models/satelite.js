@@ -22,7 +22,6 @@ function Satelite({position, size, orbit}) {
         </mesh>
         <Orbit xRadius={orbit} zRadius={orbit} position={0} />
       </>
-      </>
     );
 }
 
