@@ -10,6 +10,9 @@ import Light from './models/light.js';
 import Sun from './models/sun.js';
 import { PerspectiveCamera } from 'three';
 import { Rel } from './functions/constants';
+import { useRef } from 'react';  
+import { useFrame, useLoader } from '@react-three/fiber';
+import { RepeatWrapping, TextureLoader } from 'three';
 function App({ x }) {
   const camera = new PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 1000 );
   camera.position.set(0,2,3);
