@@ -13,7 +13,7 @@ function Sun({ position, base, size }) {
       <>
         <mesh position={position} ref={mesh}>
           <sphereGeometry args={[size, 30, 30]} />
-          <meshStandardMaterial/>
+          <meshStandardMaterial map={base} />
         </mesh>
       </>
     );
