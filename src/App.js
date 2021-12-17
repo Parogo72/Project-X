@@ -13,11 +13,12 @@ import { Rel } from './functions/constants';
 import { useRef } from 'react';  
 import { useFrame, useLoader } from '@react-three/fiber';
 import { RepeatWrapping, TextureLoader } from 'three';
+const texture = useLoader(TextureLoader, "/sun.jpeg");
+texture.wrapS = RepeatWrapping;
 function App({ x }) {
   const camera = new PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 1000 );
   camera.position.set(0,2,3);
-  const texture = useLoader(TextureLoader, "/sun.jpeg");
-  texture.wrapS = RepeatWrapping;
+  
   const rel = new Rel(x);
   return (
   <Suspense fallback={<Loader />}>
