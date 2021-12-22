@@ -1,11 +1,12 @@
 import { useRef } from 'react';  
-import { useFrame, useLoader } from '@react-three/fiber';
-import { RepeatWrapping, TextureLoader } from 'three';
+import { useFrame } from '@react-three/fiber';
+import { ClampToEdgeWrapping, TextureLoader } from 'three';
 import Orbit from './orbit.js';
 
 function Planet({ position, base, size, orbit }) {
-    const texture = useLoader(TextureLoader, base);
-    texture.wrapS = RepeatWrapping;
+    const texture = new TextureLoader().load(base);
+    texture.wrapS = ClampToEdgeWrapping;
+    texture.wrapT = ClampToEdgeWrapping;
     const mesh = useRef(null);
     useFrame(() => {
       mesh.current.rotation.y += 0.001;
