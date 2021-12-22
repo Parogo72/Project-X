@@ -13,7 +13,7 @@ function Planet({ position, base, size, orbit }) {
     return (
       <>
         <mesh castShadow receiveShadow={true} position={position} ref={mesh}>
-          <sphereGeometry args={[size, 30, 30]} />
+          <sphereGeometry args={[size, 30, 30]}/>
           <meshStandardMaterial map={texture}/>
         </mesh>
         <Orbit xRadius={orbit} zRadius={orbit} position={100}/>
