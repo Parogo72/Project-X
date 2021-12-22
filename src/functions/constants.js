@@ -1,4 +1,4 @@
-const relData = { sunSize: 200, planetSize: 1 };
+const relData = { sunSize: 50, planetSize: 1 };
 
 class Rel {
     static defaultData = relData;

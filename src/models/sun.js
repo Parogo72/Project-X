@@ -7,7 +7,7 @@ function Sun({ position, base, size }) {
     texture.wrapS = RepeatWrapping;
     const mesh = useRef(null);
     useFrame(() => {
-      mesh.current.rotation.y += 0.0005;
+      mesh.current.rotation.y += 0.0002;
     })
     return (
       <>

@@ -20,9 +20,9 @@ function App({ x }) {
       <OrbitControls enablePan={false} enableZoom={false} position0={[5, 0, 0]}/>
       <MyStars />
       <ambientLight intensity= {0.5} />
-      <Sun position={[500, 0, 0]} size={rel.calc('sunSize')} base={"/sun.jpeg"}/>
+      <Sun position={[100, 0, 0]} size={rel.calc('sunSize')} base={"/sun.jpeg"}/>
       <Light brightness={2} color={"white"} position={[10, 0, 0]}/>
-      <Planet position={[0, 0, 0]} size={rel.calc('planetSize')} base={"/earth.jpeg"} orbit={500}/>
+      <Planet position={[0, 0, 0]} size={rel.calc('planetSize')} base={"/earth.jpeg"} orbit={100}/>
       <Satelite position={[1, 0, 0]} size={0.1} orbit={1.5}/>
     </Canvas>
   </Suspense>
