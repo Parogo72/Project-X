@@ -1,5 +1,5 @@
 const relData = { sunSize: 50, planetSize: 1 };
-
+const cameraBase = [-3,2,-3];
 class Rel {
     static defaultData = relData;
     static defaultErrval = 0;
@@ -33,4 +33,4 @@ class Rel {
         return ((useDefaultData ? Rel.defaultDataData : this.data)[name] || this.errval) * this.x;
     }
 }
-export { Rel };
+export { Rel, cameraBase };
