@@ -20,6 +20,7 @@ function App({ x }) {
   document.addEventListener("keydown", event => {
     if(event.key === "Escape") unzoom(camera);
   })
+
   return (
   <Suspense fallback={<Loader />}>
     <Canvas shadows shadowMap camera={camera} id="canvas" >
@@ -27,7 +28,7 @@ function App({ x }) {
       <ambientLight intensity= {0.5} />
       <Sun position={[100, 0, 0]} size={rel.calc('sunSize')} base={"/sun.jpeg"} />
       <Light brightness={2} color={"white"} position={[10, 0, 0]}/>
-      <Planet position={[0, 0, 0]} size={rel.calc('planetSize')} base={"/earth.jpeg"} orbit={100}/>
+      <Planet position={[0, 0, 0]} size={rel.calc('planetSize')} base={"/earth.jpeg"} orbitSize={100}/>
       <Satelite position={[1, 0, 0]} size={0.1} orbit={1.5}/>
     </Canvas>
   </Suspense>
