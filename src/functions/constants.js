@@ -1,5 +1,9 @@
 const relData = { sunSize: 50, planetSize: 1 };
-const cameraBase = [-3,2,-3];
+const cameraBase = {
+    x: -3,
+    y: 2,
+    z: -3
+}
 class Rel {
     static defaultData = relData;
     static defaultErrval = 0;
