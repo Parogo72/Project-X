@@ -39,7 +39,7 @@ class Planet extends Component{
    * @param {object} camera - camera that zooms
   */
   zoom(camera) {
-    if(this.focused) return;
+    if(this.focused || this.props.parent.focused) return;
     this.stopZoom()
     this.focused = true;
     const initial = camera.position;
@@ -93,14 +93,17 @@ class Planet extends Component{
   */
   render() {
     document.addEventListener("keydown", event => {
-      if(event.key === "Escape") this.unzoom(this.props.camera);
+      if(event.key === "Escape") {
+        this.unzoom(this.props.camera)
+        this.props.parent.unzoom()
+      };
     })
     const mesh = this.myRef
     this.rotate(mesh)
     return (
       <>
-        <mesh castShadow receiveShadow={true} position={this.props.position} ref={mesh} onClick={() => this.zoom(this.props.camera)}>
-          <sphereGeometry args={[this.props.size, 30, 30]}/>
+        <mesh castShadow receiveShadow={true} position={this.props.position} ref={mesh} onClick={(e) => {this.zoom(this.props.camera); this.props.parent.zoom()}}>
+          <sphereGeometry args={[this.props.size, 30, 30]} />
           <meshStandardMaterial map={this.texture}/>
         </mesh>
         <Orbit xRadius={this.props.orbitSize} zRadius={this.props.orbitSize} position={100}/>

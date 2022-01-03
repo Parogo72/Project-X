@@ -1,5 +1,5 @@
 import { createRef, Component } from 'react';  
-import { Group, Object3D, Scene, TextureLoader, Vector2, WebGLRenderer } from 'three';
+import { TextureLoader } from 'three';
 import Orbit from './orbit.js';
 import { cameraBase } from '../functions/constants.js';
 
@@ -43,7 +43,7 @@ class Satelite extends Component{
    * @param {object} camera - camera that zooms
   */
   zoom(camera) {
-    if(this.focused) return;
+    if(this.focused || this.props.parent.focused) return;
     this.stopZoom()
     this.focused = true;
     this.focus(camera);
@@ -164,14 +164,17 @@ class Satelite extends Component{
   render() {
     const mesh = this.myRef
     document.addEventListener("keydown", event => {
-      if(event.key === "Escape") this.unzoom(this.props.camera);
+      if(event.key === "Escape") {
+        this.unzoom(this.props.camera);
+        this.props.parent.unzoom()
+      }
     })
     this.rotate(mesh)
     this.orbitate(mesh)
     return (
       <>
-        <mesh castShadow={true} receiveShadow position={this.props.position} ref={mesh} onClick={(e) => this.zoom(this.props.camera, e)}>
-          <sphereGeometry args={[this.props.size, 30, 30]} />
+        <mesh castShadow={true} receiveShadow position={this.props.position} ref={mesh} onClick={(e) => {this.zoom(this.props.camera, e); this.props.parent.zoom()}}>
+          <sphereGeometry args={[this.props.size, 30, 30]}/>
           <meshStandardMaterial color="white"/>
         </mesh>
         <EffectComposer multisampling={5} autoClear={false}>
