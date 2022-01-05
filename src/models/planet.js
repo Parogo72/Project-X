@@ -2,6 +2,7 @@ import { createRef, Component } from 'react';
 import { TextureLoader } from 'three';
 import Orbit from './orbit.js';
 import { cameraBase } from '../functions/constants.js';
+import * as TWEEN from "@tweenjs/tween.js";
 
 class Planet extends Component{
   constructor(props) {
@@ -9,72 +10,11 @@ class Planet extends Component{
     this.texture = this.loadTexture();
     this.myRef = createRef();
     this.focused = false;
-  }
-  /** 
-   * Start the rotation of the element
-   * @param {object} mesh - mesh to rotate
-  */
-  rotate(mesh) {
-    this.rotationID = setInterval(() => {
-      mesh.current.rotation.y += 0.001;
-    }, 10)
-  }
-  /**
-   * Calculates de position of the camera
-   * @param {Array<Number>} initial 
-   * @param {Number} landa 
-   * @returns {{x: number, y: number, z: number, error: boolean}} Object with position and error
-   */
-  rectaCords(initial, landa) {
-    let error = false;
-    let x = initial.x*landa;
-    let y = initial.y*landa;
-    let z = initial.z*landa;
-    let i = Math.sqrt( (x)**2 + (y)**2 + (z)**2 )
-    if( (i < this.props.size*2 && this.focused) || (i > Math.sqrt( cameraBase.x**2 + cameraBase.y**2 + cameraBase.z**2 ) && !this.focused)) error = true;
-    return {x, y, z, error};
-  }
-  /** 
-   * Zooms the element
-   * @param {object} camera - camera that zooms
-  */
-  zoom(camera) {
-    if(this.focused || this.props.parent.focused) return;
-    this.stopZoom()
-    this.focused = true;
-    const initial = camera.position;
-    let landa = 1;
-    this.zoomID = setInterval(() => {
-        landa -= 0.0001;
-        const cords = this.rectaCords(initial, landa);
-        camera.position.x = cords.x;
-        camera.position.y = cords.y;
-        camera.position.z = cords.z;
-        if(cords.error === true) this.stopZoom();
-    }, 10)
-  }
-  /** 
-   * Unzooms the element
-   * @param {object} camera - camera that unzooms
-  */
-   unzoom(camera) {
-    if(!this.focused) return;
-    this.stopZoom()
-    this.focused = false;
-    const initial = camera.position;
-    let landa = 1;
-    this.zoomID = setInterval(() => {
-        landa += 0.0001;
-        const cords = this.rectaCords(initial, landa);
-        camera.position.x = cords.x;
-        camera.position.y = cords.y;
-        camera.position.z = cords.z;
-        if(cords.error === true) this.stopZoom();
-    }, 10)
-  }
-   /** Stop the zoom of the element */
-  stopZoom() {
-    clearInterval(this.zoomID);
+    this.state = {
+      speed:0,
+      size: props.size,
+      orbitSize: props.orbitSize
+    }
   }
   /** Stop the rotation of the element */
   stopRotate() {
@@ -86,6 +26,50 @@ class Planet extends Component{
   */
   loadTexture() {
     return new TextureLoader().load(this.props.base);
+  }
+  /** 
+   * Start the rotation of the element
+   * @param {object} mesh - mesh to rotate
+  */
+  rotate(mesh) {
+    this.rotationID = setInterval(() => {
+      mesh.current.rotation.y += 0.001;
+    }, 10)
+  }
+  /** 
+   * Zooms the element
+   * @param {object} camera - camera that zooms
+  */
+  zoom(camera) {
+    if(this.focused || this.props.parent.focused) return;
+    this.focused = true;
+    const initial = camera.position;
+    new TWEEN.Tween(initial)
+      .to({ x: -this.props.size * 1.5, y: camera.position.y/2, z: -this.props.size * 1.5}, 500)
+      .onUpdate(() =>{
+        camera.position.set(initial.x, initial.y, initial.z)
+      }
+      )
+      .start();
+  }
+  /** 
+   * Unzooms the element
+   * @param {object} camera - camera that unzooms
+  */
+   unzoom(camera) {
+    if(!this.focused) return;
+    this.focused = false;
+    const initial = camera.position;
+    new TWEEN.Tween(initial)
+      .to({ x: cameraBase.x, y: cameraBase.y, z: cameraBase.z}, 500)
+      .onUpdate(() =>{
+        camera.position.set(initial.x, initial.y, initial.z)
+      }
+      )
+      .start();
+  }
+  renderLi() {
+    document.getElementById("inputs")
   }
   /** 
    * Renders the object

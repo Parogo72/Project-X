@@ -1,0 +1,37 @@
+#inputs {
+    position: absolute;
+    top:5%;
+    right: 10%;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul.elementFocus {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+ul.elementFocus li.checked {
+    border: 5px solid tomato;
+}
+ul.elementFocus li {
+    display: inline-block;
+    margin: 10%;
+    border: 5px solid rgba(0, 0, 0, 0);
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input {
+    margin: 5%;
+    width: 50%;
+}
+

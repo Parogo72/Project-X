@@ -1,6 +1,7 @@
 import { createRef, Component } from 'react';  
 import Planet from './planet.js';
 import Satelite from './satelite.js';
+
 class AstralObject extends Component{
   constructor(props) {
     super(props);
@@ -18,9 +19,6 @@ class AstralObject extends Component{
    * @returns {object} Mesh
   */
   render() {
-    document.addEventListener("keydown", event => {
-      if(event.key === "Escape") this.unzoom(this.props.camera);
-    })
     const mesh = this.myRef
     return (
         <>
