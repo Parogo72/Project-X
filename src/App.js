@@ -1,6 +1,6 @@
 import './App.css';
 import './my.css';
-import React, {Suspense} from 'react';  
+import { Suspense, Component } from 'react';  
 import { Loader } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber'
 import MyStars from './models/stars.js';
@@ -11,27 +11,42 @@ import { Rel, cameraBase } from './functions/constants';
 import AstralObject from './models/astralObject.js';
 import Inputs from './models/inputs.js';
 import * as TWEEN from "@tweenjs/tween.js";
-import animate from "./functions/animate.js"
+import animate from "./functions/animate.js";
+import config from './config.json';
 animate((time) => {
   TWEEN.update(time);
 });
-function App({ x }) {
-  const camera = new PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 1000 );
-  camera.position.set(cameraBase.x, cameraBase.y, cameraBase.z);
-  camera.lookAt(new Vector3(0, 0, 0));
-  const rel = new Rel(x);
-  return (
-  <Suspense fallback={<Loader/>}>
-    <Canvas shadows shadowMap camera={camera} id="canvas">
-      <MyStars/>
-      <ambientLight intensity= {0.5} />
-      <Sun position={[100, 0, 0]} size={rel.calc('sunSize')} base={"/sun.jpeg"} />
-      <Light brightness={2} color={"white"} position={[10, 0, 0]}/>
-      <AstralObject rel={rel} camera={camera}/> 
-    </Canvas>
-    <Inputs/>
-  </Suspense>
-  )
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = config
+    }
+    updateKey = (value) => {
+      this.setState(value)
+    }
+    setup() {
+        const camera = new PerspectiveCamera(this.state.camera.fov, window.innerWidth/window.innerHeight, this.state.camera.near, this.state.camera.far );
+        camera.position.set(this.state.camera.position.x, this.state.camera.position.y, this.state.camera.position.z);
+        camera.lookAt(new Vector3(0, 0, 0));
+        this.camera = camera;
+        this.rel = new Rel(this.props.x);
+    }
+    render() {
+        this.setup();
+        return (
+            <Suspense fallback={<Loader/>}>
+              <Canvas shadows shadowMap camera={this.camera} id="canvas">
+                <MyStars/>
+                <ambientLight intensity= {this.state.light.intensity} />
+                <Sun data={this.state} rel={this.rel} updateKey={this.updateKey}/>
+                <Light brightness={this.state.light.brightness} color={this.state.light.color} position={this.state.light.position}/>
+                <AstralObject rel={this.rel} camera={this.camera} data={this.state} updateKey={this.updateKey}/> 
+              </Canvas>
+              <Inputs/>
+            </Suspense>
+        )
+    }
 }
 
-export default App;
+export default App

@@ -11,13 +11,22 @@ class Inputs extends Component{
         planetSize: 10,
     }
   }
-  update(e) {
-      console.log(e)
+  visible(s) {
+      switch(s) {
+          case "planet": if(this.state.planetCheck) return {display: "block"}
+          break;
+          case "satelite": if(this.state.sateliteCheck) return {display: "block"}
+          break;
+          default:
+          break;
+      }
+      return {display: "none", color: "black"}
   }
   focus(e) {
     if(!e.target.checked) return this.setState({ planetCheck: false, sateliteCheck: false });
-    if(e.target.id === "planet") return this.setState({ planetCheck: true, sateliteCheck: false });
-    if(e.target.id === "satelite") return this.setState({ sateliteCheck: true, planetCheck: false });
+    if(e.target.id === "planet") this.setState({ planetCheck: true, sateliteCheck: false });
+    if(e.target.id === "satelite") this.setState({ sateliteCheck: true, planetCheck: false });
+    
   }
   /** 
    * Renders the object
@@ -43,7 +52,34 @@ class Inputs extends Component{
                         </label>
                     </li>
                 </ul>
-                <E state={this.state}></E>
+                <ul id="sateliteInfo" style={this.visible("satelite")}>
+                    <li>
+                        <input defaultValue={this.state.sateliteSize}/>
+                        <label>Size</label>
+                    </li>
+                    <li>
+                        <input defaultValue={this.state.sateliteSpeed}/>
+                        <label>Speed</label>
+                    </li>
+                    <li>
+                        <input defaultValue={this.state.sateliteOrbit}/>
+                        <label>Orbit</label>
+                    </li>
+                </ul>
+                <ul id="planetInfo" style={this.visible("planet")}>
+                    <li id="a">
+                        <input defaultValue={this.state.planetSize}/>
+                        <label>Size</label>
+                    </li>
+                    <li>
+                        <input defaultValue={this.state.planetSpeed} onChange={e => this.update(e)}/>
+                        <label>Speed {this.state.planetSpeed}</label>
+                    </li>
+                    <li>
+                        <input value={this.state.planetOrbit}/>
+                        <label>Orbit {this.state.planetOrbit}</label>
+                    </li>
+                </ul>
             </div>
         </>
     );
@@ -51,39 +87,3 @@ class Inputs extends Component{
 }
 
 export default Inputs;
-
-function E(e) {
-    if(e.state.sateliteCheck) {
-        return(<ul id="sateliteInfo">
-            <li>
-                <input value={e.state.sateliteSize}/>
-                <label>Size</label>
-            </li>
-            <li>
-                <input value={e.state.sateliteSpeed}/>
-                <label>Speed</label>
-            </li>
-            <li>
-                <input value={e.state.sateliteOrbit}/>
-                <label>Orbit</label>
-            </li>
-        </ul>)
-    }
-    if(e.state.planetCheck) {
-        return(<ul id="planetInfo">
-            <li id="a">
-                <input value={e.state.planetSize}/>
-                <label>Size</label>
-            </li>
-            <li>
-                <input value={e.state.planetSpeed} onChange={e => this.update(e)}/>
-                <label>Speed {e.state.planetSpeed}</label>
-            </li>
-            <li>
-                <input value={e.state.planetOrbit}/>
-                <label>Orbit {e.state.planetOrbit}</label>
-            </li>
-        </ul>)
-    }
-    return <ul></ul>
-  }

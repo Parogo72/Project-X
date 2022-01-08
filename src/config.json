@@ -1,0 +1,58 @@
+{
+    "satelite": {
+        "size": 0,
+        "speed": 0,
+        "orbit": 0,
+        "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "focus": false,
+        "texture": null
+    },
+    "planet": {
+        "size": 0,
+        "speed": 0,
+        "orbit": 0,
+        "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "focus": true,
+        "texture": "/earth.jpeg"
+    },
+    "sun": {
+        "size": 0,
+        "position": {
+            "x": 100,
+            "y": 0,
+            "z": 0
+        },
+        "texture": "/sun.jpeg"
+    },
+    "camera": {
+        "position": {
+            "x": -3,
+            "y": 2,
+            "z": -3
+        },
+        "fov": 50,
+        "near": 0.1,
+        "far": 1000
+    },
+    "light": {
+        "intensity": 0.5,
+        "penumbra": 1,
+        "angle": 0.3,
+        "brightness": 2,
+        "color": "#FFFFFF",
+        "position": {
+            "x": 10,
+            "y": 0,
+            "z": 0
+        },
+        "castShadow": true
+    }
+}
