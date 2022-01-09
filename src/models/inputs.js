@@ -27,7 +27,7 @@ class Inputs extends Component{
   focus(e) {
     if(!e.target.checked) {
         this.props.data.planet.focus = false;
-        this.props.data.satelite.focus = false
+        this.props.data.satelite.focus = false;
         return
     }
     if(e.target.id === "planet") {

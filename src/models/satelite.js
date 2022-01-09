@@ -60,11 +60,10 @@ class Satelite extends Component{
    * @param {object} camera - Camera that zooms
   */
   zoom(camera) {
-    if(this.focused) return;
+    if(this.focused || this.props.data.planet.focus === true) return;
     this.props.data.satelite.focus = true;
     this.focused = true;
     this.stopZoom();
-    this.focused = true;
     this.focus(camera);
     this.orbitateCamera(camera);
   }
@@ -73,12 +72,11 @@ class Satelite extends Component{
    * @param {object} camera - Camera that unzooms
   */
    unzoom(camera) {
-    if(!this.focused) return;
+    if(!this.focused || this.props.data.planet.focus) return;
     this.props.data.satelite.focus = false;
     this.focused = false;
     this.stopZoom();
     this.stopFocus();
-    this.focused = false;
     const initial = camera.position;
     const cords = this.currentPosition;
     this.currentAnimation = new TWEEN.Tween(initial)
@@ -132,7 +130,8 @@ class Satelite extends Component{
   waitChange() {
     clearInterval(this.waitChangeID)
     this.waitChangeID = setInterval(() => {
-      if(this.focused && this.props.data.satelite.focus !== this.focused) this.unzoom(this.props.camera); else if(!this.focused && this.props.data.satelite.focus !== this.focused) this.zoom(this.props.camera)
+      if(this.focused && this.props.data.satelite.focus !== this.focused && this.props.data.planet.focus === true) {this.stopFocus(); this.stopZoom(); this.focused = false;}
+      if(this.focused && this.props.data.satelite.focus !== this.focused && this.props.data.planet.focus === false) {this.unzoom(this.props.camera)} else if(!this.focused && this.props.data.satelite.focus !== this.focused) this.zoom(this.props.camera)
     }, 1)
 }
   /** 

@@ -1,5 +1,5 @@
 import { createRef, Component } from 'react';  
-import { TextureLoader } from 'three';
+import { TextureLoader, Vector3 } from 'three';
 import Orbit from './orbit.js';
 import { cameraBase } from '../functions/constants.js';
 import * as TWEEN from "@tweenjs/tween.js";
@@ -7,7 +7,7 @@ import * as TWEEN from "@tweenjs/tween.js";
 class Planet extends Component{
   constructor(props) {
     super(props);
-    //this.texture = this.loadTexture();
+    this.texture = this.loadTexture();
     this.myRef = createRef();
     this.focused = false;
     this.state = {
@@ -41,42 +41,55 @@ class Planet extends Component{
    * @param {object} camera - camera that zooms
   */
   zoom(camera) {
-    if(this.focused) return;
+    if(this.focused || this.props.data.satelite.focus === true) return;
     this.props.data.planet.focus = true;
     this.focused = true;
     const initial = camera.position;
+    const cords = new Vector3
+    camera.getWorldDirection(cords);
     new TWEEN.Tween(initial)
-      .to({ x: -this.props.data.planet.size * 1.5, y: camera.position.y/2, z: -this.props.data.planet.size * 1.5}, 500)
+      .to({ x: -this.props.data.planet.size * 1.5, y: this.props.data.camera.position.y*2/3, z: -this.props.data.planet.size * 1.5}, 500)
       .onUpdate(() =>{
         camera.position.set(initial.x, initial.y, initial.z)
       }
       )
-      .start();
+      .start().chain(new TWEEN.Tween(cords)
+      .to({ x: 0, y: 0, z: 0}, 500)
+      .onUpdate(() =>{
+        camera.lookAt(new Vector3(cords.x, cords.y, cords.z))
+      }
+      )
+      .start()).onComplete(() => camera.lookAt(new Vector3(0, 0, 0)));
   }
   /** 
    * Unzooms the element
    * @param {object} camera - camera that unzooms
   */
    unzoom(camera) {
-    if(!this.focused) return;
+    if(!this.focused || this.props.data.satelite.focus) return;
     this.props.data.planet.focus = false;
     this.focused = false;
     const initial = camera.position;
+    const cords = new Vector3
+    camera.getWorldDirection(cords);
     new TWEEN.Tween(initial)
       .to({ x: cameraBase.x, y: cameraBase.y, z: cameraBase.z}, 500)
       .onUpdate(() =>{
         camera.position.set(initial.x, initial.y, initial.z)
       }
       )
-      .start();
-  }
-  renderLi() {
-    document.getElementById("inputs")
+      .start().chain(new TWEEN.Tween(cords)
+      .to({ x: 0, y: 0, z: 0}, 500)
+      .onUpdate(() =>{
+        camera.lookAt(new Vector3(cords.x, cords.y, cords.z))
+      }
+      )
+      .start()).onComplete(() => camera.lookAt(new Vector3(0, 0, 0)));
   }
   waitChange() {
     clearInterval(this.waitChangeID)
     this.waitChangeID = setInterval(() => {
-      if(this.focused && this.props.data.planet.focus !== this.focused) this.unzoom(this.props.camera); else if(!this.focused && this.props.data.planet.focus !== this.focused) this.zoom(this.props.camera)
+      if(this.focused && this.props.data.planet.focus !== this.focused && this.props.data.satelite.focus === false) this.unzoom(this.props.camera); else if(!this.focused && this.props.data.planet.focus !== this.focused) this.zoom(this.props.camera)
     }, 1)
 }
   /** 

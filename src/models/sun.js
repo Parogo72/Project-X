@@ -4,7 +4,7 @@ import { TextureLoader } from 'three';
 class Sun extends Component{
   constructor(props) {
     super(props);
-    //this.texture = this.loadTexture();
+    this.texture = this.loadTexture();
     this.myRef = createRef();
   }
   /** 
