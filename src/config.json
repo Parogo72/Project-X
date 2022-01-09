@@ -1,10 +1,10 @@
 {
     "satelite": {
-        "size": 0,
+        "size": 0.1,
         "speed": 0,
-        "orbit": 0,
+        "orbit": 1.5,
         "position": {
-            "x": 0,
+            "x": -1.5,
             "y": 0,
             "z": 0
         },
@@ -14,13 +14,13 @@
     "planet": {
         "size": 0,
         "speed": 0,
-        "orbit": 0,
+        "orbit": 100,
         "position": {
             "x": 0,
             "y": 0,
             "z": 0
         },
-        "focus": true,
+        "focus": false,
         "texture": "/earth.jpeg"
     },
     "sun": {
@@ -54,5 +54,6 @@
             "z": 0
         },
         "castShadow": true
-    }
+    },
+    "proportion": 1
 }

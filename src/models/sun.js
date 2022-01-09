@@ -31,18 +31,19 @@ class Sun extends Component{
     const obj = this.props.data
     obj.sun.size = this.props.rel.calc("sunSize")
     this.props.updateKey(obj)
-    console.log(this.props.data)
   }
+  
   /** 
    * Renders the object
    * @returns {object} Mesh
   */
   render() {
     const mesh = this.myRef;
+    this.stopRotate();
     this.rotate(mesh);
     return (
       <>
-        <mesh position={[this.props.data.sun.position.x, this.props.data.sun.position.y, this.props.data.sun.position.z ]} ref={mesh}>
+        <mesh position={[this.props.data.planet.orbit, this.props.data.sun.position.y, this.props.data.sun.position.z ]} ref={mesh}>
           <sphereGeometry args={[this.props.data.sun.size, 30, 30]} />
           <meshStandardMaterial map={this.texture} />
         </mesh>

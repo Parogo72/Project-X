@@ -6,13 +6,6 @@ class AstralObject extends Component{
   constructor(props) {
     super(props);
     this.myRef = createRef();
-    this.focused = false;
-  }
-  zoom() {
-    this.focused = true;
-  }
-  unzoom() {
-    this.focused = false;
   }
   /** 
    * Renders the object
@@ -23,8 +16,8 @@ class AstralObject extends Component{
     return (
         <>
           <mesh ref={mesh}>
-            <Planet position={[0, 0, 0]} size={this.props.rel.calc('planetSize')} base={"/earth.jpeg"} orbitSize={100} camera={this.props.camera} parent={this}/>
-            <Satelite position={[-1.5, 0, 0]} size={0.1} orbitSize={1.5} camera={this.props.camera} parent={this}/>
+            <Planet updateKey={this.props.updateKey} data={this.props.data} position={[this.props.data.planet.position.x, this.props.data.planet.position.y, this.props.data.planet.position.z]} size={this.props.data.planet.size} base={this.props.data.planet.texture} orbitSize={this.props.data.planet.orbit} camera={this.props.camera} parent={this}/>
+            <Satelite updateKey={this.props.updateKey} data={this.props.data} position={[this.props.data.satelite.position.x, this.props.data.satelite.position.y, this.props.data.satelite.position.z]} size={this.props.data.satelite.size} orbitSize={this.props.data.satelite.orbit} camera={this.props.camera} parent={this}/>
           </mesh>
         </>
     );

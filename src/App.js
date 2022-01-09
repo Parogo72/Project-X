@@ -7,12 +7,18 @@ import MyStars from './models/stars.js';
 import Light from './models/light.js';
 import Sun from './models/sun.js';
 import { PerspectiveCamera, Vector3 } from 'three';
-import { Rel, cameraBase } from './functions/constants';
+import { Rel } from './functions/constants';
 import AstralObject from './models/astralObject.js';
 import Inputs from './models/inputs.js';
 import * as TWEEN from "@tweenjs/tween.js";
 import animate from "./functions/animate.js";
 import config from './config.json';
+const rel = new Rel(config.proportion);
+config.sun.size = rel.calc("sunSize")
+config.planet.size = rel.calc("planetSize")
+const camera = new PerspectiveCamera(config.camera.fov, window.innerWidth/window.innerHeight, config.camera.near, config.camera.far );
+camera.position.set(config.camera.position.x, config.camera.position.y, config.camera.position.z);
+camera.lookAt(new Vector3(0, 0, 0));
 animate((time) => {
   TWEEN.update(time);
 });
@@ -26,14 +32,11 @@ class App extends Component {
       this.setState(value)
     }
     setup() {
-        const camera = new PerspectiveCamera(this.state.camera.fov, window.innerWidth/window.innerHeight, this.state.camera.near, this.state.camera.far );
-        camera.position.set(this.state.camera.position.x, this.state.camera.position.y, this.state.camera.position.z);
-        camera.lookAt(new Vector3(0, 0, 0));
         this.camera = camera;
-        this.rel = new Rel(this.props.x);
+        this.rel = rel;
     }
     render() {
-        this.setup();
+        this.setup()
         return (
             <Suspense fallback={<Loader/>}>
               <Canvas shadows shadowMap camera={this.camera} id="canvas">
@@ -43,7 +46,7 @@ class App extends Component {
                 <Light brightness={this.state.light.brightness} color={this.state.light.color} position={this.state.light.position}/>
                 <AstralObject rel={this.rel} camera={this.camera} data={this.state} updateKey={this.updateKey}/> 
               </Canvas>
-              <Inputs/>
+              <Inputs data={this.state} updateKey={this.updateKey}/>
             </Suspense>
         )
     }

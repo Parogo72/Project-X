@@ -60,7 +60,9 @@ class Satelite extends Component{
    * @param {object} camera - Camera that zooms
   */
   zoom(camera) {
-    if(this.focused || this.props.parent.focused) return;
+    if(this.focused) return;
+    this.props.data.satelite.focus = true;
+    this.focused = true;
     this.stopZoom();
     this.focused = true;
     this.focus(camera);
@@ -72,6 +74,8 @@ class Satelite extends Component{
   */
    unzoom(camera) {
     if(!this.focused) return;
+    this.props.data.satelite.focus = false;
+    this.focused = false;
     this.stopZoom();
     this.stopFocus();
     this.focused = false;
@@ -125,7 +129,12 @@ class Satelite extends Component{
       )
       .start().onComplete(() => this.currentAnimation = null)
   }
-  
+  waitChange() {
+    clearInterval(this.waitChangeID)
+    this.waitChangeID = setInterval(() => {
+      if(this.focused && this.props.data.satelite.focus !== this.focused) this.unzoom(this.props.camera); else if(!this.focused && this.props.data.satelite.focus !== this.focused) this.zoom(this.props.camera)
+    }, 1)
+}
   /** 
    * Renders the object
    * @returns {object} Mesh
@@ -135,14 +144,17 @@ class Satelite extends Component{
     document.addEventListener("keydown", event => {
       if(event.key === "Escape" && !this.currentAnimation) {
         this.unzoom(this.props.camera);
-        this.props.parent.unzoom()
       }
     })
+    if(this.props.data.satelite.focus) this.zoom(this.props.camera); else this.unzoom(this.props.camera)
+    this.waitChange();
+    this.stopOrbitate();
+    this.stopRotate();
     this.rotate(mesh)
     this.orbitate(mesh)
     return (
       <>
-        <mesh castShadow={true} receiveShadow position={this.props.position} ref={mesh} onClick={(e) => {this.zoom(this.props.camera, e); this.props.parent.zoom()}}>
+        <mesh castShadow={true} receiveShadow position={this.props.position} ref={mesh} onClick={(e) => {this.zoom(this.props.camera, e)}}>
           <sphereGeometry args={[this.props.size, 30, 30]}/>
           <meshStandardMaterial color="white"/>
         </mesh>

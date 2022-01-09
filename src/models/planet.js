@@ -41,11 +41,12 @@ class Planet extends Component{
    * @param {object} camera - camera that zooms
   */
   zoom(camera) {
-    if(this.focused || this.props.parent.focused) return;
+    if(this.focused) return;
+    this.props.data.planet.focus = true;
     this.focused = true;
     const initial = camera.position;
     new TWEEN.Tween(initial)
-      .to({ x: -this.props.size * 1.5, y: camera.position.y/2, z: -this.props.size * 1.5}, 500)
+      .to({ x: -this.props.data.planet.size * 1.5, y: camera.position.y/2, z: -this.props.data.planet.size * 1.5}, 500)
       .onUpdate(() =>{
         camera.position.set(initial.x, initial.y, initial.z)
       }
@@ -58,6 +59,7 @@ class Planet extends Component{
   */
    unzoom(camera) {
     if(!this.focused) return;
+    this.props.data.planet.focus = false;
     this.focused = false;
     const initial = camera.position;
     new TWEEN.Tween(initial)
@@ -71,6 +73,12 @@ class Planet extends Component{
   renderLi() {
     document.getElementById("inputs")
   }
+  waitChange() {
+    clearInterval(this.waitChangeID)
+    this.waitChangeID = setInterval(() => {
+      if(this.focused && this.props.data.planet.focus !== this.focused) this.unzoom(this.props.camera); else if(!this.focused && this.props.data.planet.focus !== this.focused) this.zoom(this.props.camera)
+    }, 1)
+}
   /** 
    * Renders the object
    * @returns {object} Mesh
@@ -79,18 +87,20 @@ class Planet extends Component{
     document.addEventListener("keydown", event => {
       if(event.key === "Escape") {
         this.unzoom(this.props.camera)
-        this.props.parent.unzoom()
       };
     })
+    if(this.props.data.planet.focus) this.zoom(this.props.camera); else this.unzoom(this.props.camera)
     const mesh = this.myRef
+    this.waitChange();
+    this.stopRotate();
     this.rotate(mesh)
     return (
       <>
-        <mesh castShadow receiveShadow={true} position={this.props.position} ref={mesh} onClick={(e) => {this.zoom(this.props.camera); this.props.parent.zoom()}}>
+        <mesh castShadow receiveShadow={true} position={this.props.position} ref={mesh} onClick={(e) => {this.zoom(this.props.camera)}}>
           <sphereGeometry args={[this.props.size, 30, 30]} />
           <meshStandardMaterial map={this.texture}/>
         </mesh>
-        <Orbit xRadius={this.props.orbitSize} zRadius={this.props.orbitSize} position={100}/>
+        <Orbit xRadius={this.props.data.planet.orbit} zRadius={this.props.data.planet.orbit} position={this.props.data.planet.orbit}/>
       </>
     );
   }
