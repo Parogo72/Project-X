@@ -8,9 +8,9 @@ class Inputs extends Component{
     this.satelite = false;
   }
   change(s, c, e) {
+      
     const obj = this.props.data
-    if(typeof obj[s][c] !== typeof e) return;
-    if(typeof e === "number" && (isNaN(Number(e)) || Number(e) === 0)) return;
+    if(isNaN(Number(e)) || Number(e) === 0) return;
     obj[s][c] = e
     this.props.updateKey(obj)
   }
