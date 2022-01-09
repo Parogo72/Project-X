@@ -8,7 +8,6 @@ class Inputs extends Component{
     this.satelite = false;
   }
   change(s, c, e) {
-      
     const obj = this.props.data
     if(isNaN(Number(e)) || Number(e) === 0) return;
     obj[s][c] = e
