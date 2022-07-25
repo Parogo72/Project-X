@@ -9,7 +9,8 @@
             "z": 0
         },
         "focus": false,
-        "texture": null
+        "texture": null,
+        "color": "#FFFFFF"
     },
     "planet": {
         "size": 0,
@@ -21,7 +22,8 @@
             "z": 0
         },
         "focus": false,
-        "texture": "/earth.jpeg"
+        "texture": "/earth.jpeg",
+        "color": "#cc6600"
     },
     "sun": {
         "size": 0,
@@ -30,7 +32,8 @@
             "y": 0,
             "z": 0
         },
-        "texture": "/sun.jpeg"
+        "texture": "/sun.jpeg",
+        "color": "#ffff00"
     },
     "camera": {
         "position": {

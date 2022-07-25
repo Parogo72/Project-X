@@ -22,7 +22,7 @@ class Inputs extends Component{
           default:
           break;
       }
-      return {display: "none", color: "black"}
+      return {visibility: "hidden", color: "black"}
   }
   focus(e) {
     if(!e.target.checked) {
@@ -61,14 +61,14 @@ class Inputs extends Component{
         <>
             <div id="inputs">
                 <ul className="elementFocus">
-                    <li className={this.props.data.planet.focus ? "checked" : ""} >
+                    <li id="inputs_planet" className={this.props.data.planet.focus ? "checked" : ""} >
                         <input type='checkbox' onChange={e => this.focus(e)} id='planet' checked={this.props.data.planet.focus}>
                         </input>
                         <label htmlFor="planet">
                             Planet
                         </label>
                     </li>
-                    <li className={this.props.data.satelite.focus ? "checked" : ""}>
+                    <li id="inputs_satelite" className={this.props.data.satelite.focus ? "checked" : ""}>
                         <input type="checkbox" onChange={e => this.focus(e)} checked={this.props.data.satelite.focus} id='satelite'>
                         </input>
                         <label htmlFor="satelite">

@@ -7,7 +7,7 @@ import * as TWEEN from "@tweenjs/tween.js";
 class Planet extends Component{
   constructor(props) {
     super(props);
-    this.texture = this.loadTexture();
+    //this.texture = this.loadTexture();
     this.myRef = createRef();
     this.focused = false;
     this.state = {
@@ -45,7 +45,7 @@ class Planet extends Component{
     this.props.data.planet.focus = true;
     this.focused = true;
     const initial = camera.position;
-    const cords = new Vector3
+    const cords = new Vector3()
     camera.getWorldDirection(cords);
     new TWEEN.Tween(initial)
       .to({ x: -this.props.data.planet.size * 1.5, y: this.props.data.camera.position.y*2/3, z: -this.props.data.planet.size * 1.5}, 500)
@@ -70,7 +70,7 @@ class Planet extends Component{
     this.props.data.planet.focus = false;
     this.focused = false;
     const initial = camera.position;
-    const cords = new Vector3
+    const cords = new Vector3()
     camera.getWorldDirection(cords);
     new TWEEN.Tween(initial)
       .to({ x: cameraBase.x, y: cameraBase.y, z: cameraBase.z}, 500)
@@ -109,9 +109,9 @@ class Planet extends Component{
     this.rotate(mesh)
     return (
       <>
-        <mesh castShadow receiveShadow={true} position={this.props.position} ref={mesh} onClick={(e) => {this.zoom(this.props.camera)}}>
+        <mesh castShadow receiveShadow={true} position={this.props.position} ref={mesh} onClick={() => {this.zoom(this.props.camera)}}>
           <sphereGeometry args={[this.props.size, 30, 30]} />
-          <meshStandardMaterial map={this.texture}/>
+          <meshStandardMaterial color={this.props.data.planet.color}/>
         </mesh>
         <Orbit xRadius={this.props.data.planet.orbit} zRadius={this.props.data.planet.orbit} position={this.props.data.planet.orbit}/>
       </>

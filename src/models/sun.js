@@ -4,7 +4,7 @@ import { TextureLoader } from 'three';
 class Sun extends Component{
   constructor(props) {
     super(props);
-    this.texture = this.loadTexture();
+    //this.texture = this.loadTexture();
     this.myRef = createRef();
   }
   /** 
@@ -45,7 +45,7 @@ class Sun extends Component{
       <>
         <mesh position={[this.props.data.planet.orbit, this.props.data.sun.position.y, this.props.data.sun.position.z ]} ref={mesh}>
           <sphereGeometry args={[this.props.data.sun.size, 30, 30]} />
-          <meshStandardMaterial map={this.texture} />
+          <meshStandardMaterial color={this.props.data.sun.color} />
         </mesh>
       </>
     );

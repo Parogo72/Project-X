@@ -12,9 +12,16 @@ input[type=number] {
 
 #inputs {
     position: absolute;
-    top:5%;
-    right: 10%;
+    top:0;
+    right: 0;
     color: white;
+    background: rgba(255, 255, 255, 0.31);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    height: 100%;
+    width: 25%;
 }
 
 ul {
@@ -22,22 +29,40 @@ ul {
 }
 
 ul.elementFocus {
-    display: flex;
     flex-direction: row;
     align-content: center;
     flex-wrap: nowrap;
-    justify-content: center;
     align-items: center;
+    padding: 0;
+    height: 75px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-content: space-evenly;
+    justify-items: center;
+    
 }
 ul.elementFocus li.checked {
-    border: 5px solid tomato;
-}
-ul.elementFocus li {
-    display: inline-block;
-    margin: 10%;
-    border: 5px solid rgba(0, 0, 0, 0);
+    background: rgba(255, 255, 255, 0.31);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+ul.elementFocus li {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+ul.elementFocus li label {
+    display: grid;
+    align-items: center;
+}
 input[type="checkbox"] {
     display: none;
 }

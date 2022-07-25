@@ -8,7 +8,7 @@ import { EffectComposer, Outline } from '@react-three/postprocessing'
 class Satelite extends Component{
   constructor(props) {
     super(props);
-    this.texture = this.loadTexture();
+    //this.texture = this.loadTexture();
     this.myRef = createRef();
     this.focused = false;
     this.currentPosition = this.props.position;
